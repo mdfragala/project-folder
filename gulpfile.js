@@ -5,8 +5,8 @@ var templates = {
 }
 
 gulp.task('template', function(){
-   $.nunjucksRender.nunjucks.configure(['./_src/assets/_layouts'],{watch:false});
-   return gulp.src('./_src/assets/_layouts/default.html')
+   $.nunjucksRender.nunjucks.configure(['./_src/_layouts'],{watch:false});
+   return gulp.src('./_src/index.html')
       .pipe($.data(function(file){
          var content = $.frontMatter(String(file.contents));
          file.contents = new Buffer(content.body);
@@ -16,7 +16,7 @@ gulp.task('template', function(){
          var extend, block, end, layout;
          layout = file.data.meta.layout || 'default';
          extend = '{% extends "default.html" %}';
-         block = '{% block content %}\n';
+         block = '{% block content %}';
          end = '{% endblock %}';
          return extend + block + contents + end;
       }))
